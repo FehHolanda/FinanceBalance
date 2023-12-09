@@ -1,12 +1,23 @@
-import { IGetUsersRepository } from "../../controllers/get-users/protocols";
+import { CreateUserParams, ICreateUserRepository } from "../../controllers/create-user/protocols";
 import { MongoClient } from "../../database/mongo";
 import { User } from "../../models/user";
 
-export class MongoGetUsersRepository implements IGetUsersRepository{
-    async getUsers(): Promise<User[]> {
-        const users = await MongoClient.db.collection<Omit<User,"id">>("users").find({}).toArray();
+export class MongoCreateUserRepository implements ICreateUserRepository{
+    async createUser(params: CreateUserParams): Promise<User> {
+        const {insertedId} =  await MongoClient.db
+            .collection("users")
+            .insertOne(params);    
 
-        return users.map(({_id,...rest}) => ({...rest,id:_id.toHexString()}));
+        const user = await MongoClient.db
+            .collection<Omit<User,"id">>("users")
+            .findOne({_id:insertedId});
+
+        if(!user){
+            throw new Error("User not created");
+        }
+
+        const {_id,...rest} = user;
+       
+        return {id:_id.toHexString(), ...rest};
     }
-
 }
