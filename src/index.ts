@@ -1,1 +1,6 @@
-console.log("hello")
+import { Express } from "express";
+
+const app = Express();
+
+c
+
