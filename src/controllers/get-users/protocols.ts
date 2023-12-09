@@ -5,6 +5,6 @@ export interface IGetUsersController {
     handle(): Promise<HttpResponse<User[]>>;
 }
 
-export interface IGetUsersrepository{
+export interface IGetUsersRepository{
     getUsers(): Promise<User[]>;
 }
