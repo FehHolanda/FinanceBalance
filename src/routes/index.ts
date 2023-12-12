@@ -6,11 +6,12 @@ import { CreateUserController } from "../controllers/create-user/create-user";
 
 export const router = Router();
 
+
 router.get("/users", async (req,res)=> {
 
     const mongoGetUsersRepository = new MongoGetUsersRepository();
-    const getUsersController = new GetUsersController(mongoGetUsersRepository);
-    
+    const getUsersController = new GetUsersController(mongoGetUsersRepository); 
+       
     const {body, statusCode} = await getUsersController.handle();
 
     res.send(body).status(statusCode);

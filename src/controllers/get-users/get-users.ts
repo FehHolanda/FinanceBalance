@@ -1,3 +1,4 @@
+import { StatusCodes } from "http-status-codes";
 import { IGetUsersController, IGetUsersRepository } from "./protocols";
 
 export class GetUsersController implements IGetUsersController {
@@ -10,14 +11,14 @@ export class GetUsersController implements IGetUsersController {
             const users =  await this.getUsersRepository.getUsers(); 
 
             return {
-                statusCode:200,
+                statusCode:StatusCodes.OK,
                 body:users,
             };
 
         } catch (error) {
             
             return {
-                statusCode:500,
+                statusCode:StatusCodes.INTERNAL_SERVER_ERROR,
                 body:"Error",
             };
         }
