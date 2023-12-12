@@ -13,9 +13,9 @@ const main = async () => {
     const server = express();
     const port = process.env.PORT || 8000;
 
-    server.use(router);
+    server.use(express.json(),router);
 
-    //await MongoClient.connect();    
+    await MongoClient.connect();    
    
     server.listen(port,() => console.log(`listening on port ${port}!`));
 

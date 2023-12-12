@@ -19,16 +19,24 @@ export class CreateUserController implements ICreateUserController {
         let validadedData: CreateUserParams | undefined = undefined;
         
         try {
-            validadedData = await bodyValidation.validate(httpRequest.body);
+            
+            validadedData = await bodyValidation.validate(httpRequest.body,{abortEarly:false});
 
-        } catch (error) {
-            const yupError = error as yup.ValidationError;
+        } catch (errors) {
+            const yupError = errors as yup.ValidationError;
+            const validationErrors: Record<string,string> = {};
 
+            yupError.inner.forEach(error => {
+                if(!error.path) return;
+                validationErrors[error.path] = error.message;
+            } );
+
+            console.log(validationErrors);
             return {
                 statusCode: StatusCodes.BAD_REQUEST,
-                body:yupError.message,
+                body: JSON.stringify({validationErrors})
             };
-        }
+        }       
 
         try {  
             
@@ -46,5 +54,5 @@ export class CreateUserController implements ICreateUserController {
             };
         }
     }
-    
+
 }
