@@ -1,8 +1,8 @@
 import { User } from "../../models/user";
-import { HttpResponse } from "../protocols";
+import { HttpRequest, HttpResponse } from "../protocols";
 
 export interface IGetUsersController {
-    handle(): Promise<HttpResponse<User[]>>;
+    handle(httpRequest:HttpRequestGetUser<GetUserParams>): Promise<HttpResponse<User[]>>;
 }
 
 export interface IGetUsersRepository{
@@ -14,3 +14,5 @@ export interface GetUserParams {
     limit?: number;
     filter?: string;
 }
+
+export type HttpRequestGetUser<Q,B=void,H=void,P=void> =  HttpRequest<B,H,P,Q>

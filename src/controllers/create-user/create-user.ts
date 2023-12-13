@@ -1,13 +1,13 @@
 import { StatusCodes } from "http-status-codes";
 import { User } from "../../models/user";
-import { HttpRequest, HttpResponse } from "../protocols";
-import { CreateUserParams, ICreateUserController, ICreateUserRepository } from "./protocols";
+import { CreateUserParams, HttpRequestCreateUser, ICreateUserController, ICreateUserRepository } from "./protocols";
+import { HttpResponse } from "../protocols";
 
 export class CreateUserController implements ICreateUserController {
 
     constructor(private readonly createUserRepository:ICreateUserRepository){}
 
-    async handle(httpRequest:HttpRequest<CreateUserParams>): Promise<HttpResponse<User>> {
+    async handle(httpRequest:HttpRequestCreateUser<CreateUserParams>): Promise<HttpResponse<User>> {
         try {  
             
             if(!httpRequest.body) return{

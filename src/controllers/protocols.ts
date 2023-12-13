@@ -3,9 +3,13 @@ export interface HttpResponse<T>{
     body: T | string;
 }
 
-export interface HttpRequest<B>{
-    params?: any;
-    headers?: any; 
+export interface HttpRequest<B,H,P,Q>{
+    params?: P;
+    headers?: H; 
     body?: B;
-
+    query?:Q;
 }
+
+
+
+

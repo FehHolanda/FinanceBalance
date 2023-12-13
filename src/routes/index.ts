@@ -15,7 +15,7 @@ export const router = Router();
 
 router.get("/users", Validator((getSchema) => ({
     //Validações
-    body: getSchema<GetUserParams>(yup.object().shape({
+    query: getSchema<GetUserParams>(yup.object().shape({
         page: yup.number().optional().moreThan(0),
         limit: yup.number().optional().moreThan(0),
         filter: yup.string().optional(),
@@ -25,7 +25,9 @@ router.get("/users", Validator((getSchema) => ({
     const mongoGetUsersRepository = new MongoGetUsersRepository();
     const getUsersController = new GetUsersController(mongoGetUsersRepository);
 
-    const { body, statusCode } = await getUsersController.handle();
+    const { body, statusCode } = await getUsersController.handle({
+        query:req.query,
+    });
 
     res.send(body).status(statusCode);
 });
