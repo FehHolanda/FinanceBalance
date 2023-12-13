@@ -3,27 +3,38 @@ import { MongoGetUsersRepository } from "../repositories/get-users/mongo-get-use
 import { MongoCreateUserRepository } from "../repositories/create-user/mongo-create-user";
 import { GetUsersController } from "../controllers/get-users/get-users";
 import { CreateUserController } from "../controllers/create-user/create-user";
+import * as yup from "yup";
+import { CreateUserParams } from "../controllers/create-user/protocols";
+import { Validator } from "../shared/middlewares/Validation";
+
 
 export const router = Router();
 
 
-router.get("/users", async (req,res)=> {
+router.get("/users", async (req, res) => {
 
     const mongoGetUsersRepository = new MongoGetUsersRepository();
-    const getUsersController = new GetUsersController(mongoGetUsersRepository); 
-       
-    const {body, statusCode} = await getUsersController.handle();
+    const getUsersController = new GetUsersController(mongoGetUsersRepository);
+
+    const { body, statusCode } = await getUsersController.handle();
 
     res.send(body).status(statusCode);
 });
 
-router.post("/users",async(req,res) => {
+
+router.post("/users", Validator({
+    body: yup.object().shape({
+        name: yup.string().required(),
+        username: yup.string().required(),
+        password: yup.string().required(),
+    }),
+}), async (req, res) => {
 
     const mongoCreateUserRepository = new MongoCreateUserRepository;
     const createUserController = new CreateUserController(mongoCreateUserRepository);
 
-    const {body,statusCode} = await createUserController.handle({
-        body: req.body,            
+    const { body, statusCode } = await createUserController.handle({
+        body: req.body,
     });
 
     res.send(body).status(statusCode);
