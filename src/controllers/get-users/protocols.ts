@@ -8,3 +8,9 @@ export interface IGetUsersController {
 export interface IGetUsersRepository{
     getUsers(): Promise<User[]>;
 }
+
+export interface GetUserParams {
+    page?: number;
+    limit?: number;
+    filter?: string;
+}
