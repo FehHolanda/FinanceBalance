@@ -4,8 +4,9 @@ import { MongoCreateUserRepository } from "../repositories/create-user/mongo-cre
 import { GetUsersController } from "../controllers/get-users/get-users";
 import { CreateUserController } from "../controllers/create-user/create-user";
 import * as yup from "yup";
-import { CreateUserParams } from "../controllers/create-user/protocols";
 import { Validator } from "../shared/middlewares/Validation";
+import { CreateUserParams } from "../controllers/create-user/protocols";
+
 
 
 export const router = Router();
@@ -22,13 +23,13 @@ router.get("/users", async (req, res) => {
 });
 
 
-router.post("/users", Validator({
-    body: yup.object().shape({
+router.post("/users", Validator((getSchema)=>({
+    body: getSchema<CreateUserParams>(yup.object().shape({
         name: yup.string().required(),
         username: yup.string().required(),
         password: yup.string().required(),
-    }),
-}), async (req, res) => {
+    })),
+})), async (req, res) => {
 
     const mongoCreateUserRepository = new MongoCreateUserRepository;
     const createUserController = new CreateUserController(mongoCreateUserRepository);

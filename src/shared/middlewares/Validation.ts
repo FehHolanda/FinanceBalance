@@ -1,11 +1,16 @@
 import { RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
-import { CreateUserParams } from "../../controllers/create-user/protocols";
 import { ObjectSchema, ValidationError } from "yup";
 
 type TProperty = "body" | "headers" | "params" | "query";
+
+type TGetSchema = <T>(schema:ObjectSchema<T>) => ObjectSchema<T>;
+
 type TAllSchemas = Record<TProperty, ObjectSchema<any>>;
-type TValidator = (schemas: Partial<TAllSchemas>) => RequestHandler;
+
+type TgetAllSchemas = (getSchema:TGetSchema) => Partial<TAllSchemas>;
+
+type TValidator = (getAllSchemas:TgetAllSchemas) => RequestHandler;
 
 export const Validator: TValidator = (schemas) => async (req, res, next) => {
 
