@@ -1,22 +1,24 @@
 import { RequestHandler } from "express";
 import { StatusCodes } from "http-status-codes";
-import { ObjectSchema, ValidationError } from "yup";
+import { AnyObject, Maybe, ObjectSchema, ValidationError } from "yup";
 
 type TProperty = "body" | "headers" | "params" | "query";
 
-type TGetSchema = <T>(schema:ObjectSchema<T>) => ObjectSchema<T>;
+type TGetSchema = <T extends Maybe<AnyObject>>(schema: ObjectSchema<T>) => ObjectSchema<T>;
 
 type TAllSchemas = Record<TProperty, ObjectSchema<any>>;
 
-type TgetAllSchemas = (getSchema:TGetSchema) => Partial<TAllSchemas>;
+type TgetAllSchemas = (getSchema: TGetSchema) => Partial<TAllSchemas>;
 
-type TValidator = (getAllSchemas:TgetAllSchemas) => RequestHandler;
+type TValidator = (getAllSchemas: TgetAllSchemas) => RequestHandler;
 
-export const Validator: TValidator = (schemas) => async (req, res, next) => {
+export const Validator: TValidator = (getAllSchemas) => async (req, res, next) => {
+
+    const schemas = getAllSchemas((schema) => schema);
 
     const errorsResult: Record<string, Record<string, string>> = {};
 
-    Object.entries(schemas).forEach(([key,schema]) => {
+    Object.entries(schemas).forEach(([key, schema]) => {
         try {
 
             schema.validateSync(req[key as TProperty], { abortEarly: false });
@@ -31,14 +33,11 @@ export const Validator: TValidator = (schemas) => async (req, res, next) => {
             });
             errorsResult[key] = errors;
         }
-
-        if(Object.entries(errorsResult).length === 0){
-            return next();
-        }else{
-            return res.status(StatusCodes.BAD_REQUEST).json({errors:errorsResult});
-        }
-
-
     });
 
+    if (Object.entries(errorsResult).length === 0) {
+        return next();
+    } else {
+        return res.status(StatusCodes.BAD_REQUEST).json({ errors: errorsResult });
+    }
 };

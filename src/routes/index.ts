@@ -30,7 +30,6 @@ router.post("/users", Validator((getSchema)=>({
         password: yup.string().required(),
     })),
 })), async (req, res) => {
-
     const mongoCreateUserRepository = new MongoCreateUserRepository;
     const createUserController = new CreateUserController(mongoCreateUserRepository);
 

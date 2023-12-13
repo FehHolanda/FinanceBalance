@@ -8,7 +8,6 @@ export class CreateUserController implements ICreateUserController {
     constructor(private readonly createUserRepository:ICreateUserRepository){}
 
     async handle(httpRequest:HttpRequest<CreateUserParams>): Promise<HttpResponse<User>> {
-                
         try {  
             
             if(!httpRequest.body) return{
