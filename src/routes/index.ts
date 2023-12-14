@@ -1,21 +1,21 @@
 import { Router } from "express";
-import { MongoGetUsersRepository } from "../repositories/get-users/mongo-get-users";
-import { MongoCreateUserRepository } from "../repositories/create-user/mongo-create-user";
-import { GetUsersController } from "../controllers/get-users";
-import { CreateUserController } from "../controllers/create-user";
+import { MongoGetUsersRepository } from "../repositories/user/get-users/mongo-get-users";
+import { MongoCreateUserRepository } from "../repositories/user/create-user/mongo-create-user";
+import { GetUsersController } from "../controllers/users/get-users";
+import { CreateUserController } from "../controllers/users/create-user";
 import * as yup from "yup";
 import { Validator } from "../shared/middlewares/Validation";
-import { CreateUserParams } from "../controllers/create-user/protocols";
-import { GetUsersParams } from "../controllers/get-users/protocols";
-import { UpdateUserParams } from "../controllers/update-user/protocols";
-import { GetUserByIdParams } from "../controllers/get-user-by-id/protocols";
-import { GetUserByIdController } from "../controllers/get-user-by-id";
-import { MongoGetUserByIdRepository } from "../repositories/get-user-by-id/mongo-get-user-id";
-import { UpdateUserController } from "../controllers/update-user";
-import { MongoUpdateUserRepository } from "../repositories/update-user/mongo-update-user";
-import { DeleteUserParams } from "../controllers/delete-user/protocols";
-import { DeleteUserController } from "../controllers/delete-user";
-import { MongoDeleteUserRepository } from "../repositories/delete-user/mongo-delete-user";
+import { CreateUserParams } from "../controllers/users/create-user/protocols";
+import { GetUsersParams } from "../controllers/users/get-users/protocols";
+import { UpdateUserParams } from "../controllers/users/update-user/protocols";
+import { GetUserByIdParams } from "../controllers/users/get-user-by-id/protocols";
+import { GetUserByIdController } from "../controllers/users/get-user-by-id";
+import { MongoGetUserByIdRepository } from "../repositories/user/get-user-by-id/mongo-get-user-id";
+import { UpdateUserController } from "../controllers/users/update-user";
+import { MongoUpdateUserRepository } from "../repositories/user/update-user/mongo-update-user";
+import { DeleteUserParams } from "../controllers/users/delete-user/protocols";
+import { DeleteUserController } from "../controllers/users/delete-user";
+import { MongoDeleteUserRepository } from "../repositories/user/delete-user/mongo-delete-user";
 
 
 
