@@ -2,14 +2,14 @@ import { User } from "../../models/user";
 import { HttpRequest, HttpResponse } from "../protocols";
 
 export interface IGetUsersController {
-    handle(httpRequest:HttpRequestGetUser<GetUserParams>): Promise<HttpResponse<User[]>>;
+    handle(httpRequest:HttpRequestGetUser<GetUsersParams>): Promise<HttpResponse<Omit<User,"password">[]>>;
 }
 
 export interface IGetUsersRepository{
-    getUsers(): Promise<User[]>;
+    getUsers(): Promise<Omit<User,"password">[]>;
 }
 
-export interface GetUserParams {
+export interface GetUsersParams {
     page?: number;
     limit?: number;
     filter?: string;
