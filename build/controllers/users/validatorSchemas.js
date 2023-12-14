@@ -23,7 +23,7 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ValidationSchema = void 0;
+exports.UserValidationSchema = void 0;
 const Validation_1 = require("../../shared/middlewares/Validation");
 const yup = __importStar(require("yup"));
 const getUsersValidation = (0, Validation_1.Validator)((getSchema) => ({
@@ -63,7 +63,7 @@ const deleteUserValidation = (0, Validation_1.Validator)((getSchema) => ({
         id: yup.string().required(),
     })),
 }));
-exports.ValidationSchema = {
+exports.UserValidationSchema = {
     getUsersValidation: getUsersValidation,
     getUserValidation: getUserValidation,
     createUserValidation: createUserValidation,

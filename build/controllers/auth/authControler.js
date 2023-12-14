@@ -9,8 +9,18 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.ensureAuthencticated = void 0;
-const ensureAuthencticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    return next();
+exports.AuthController = void 0;
+const signin_1 = require("./signin");
+const mongo_get_user_username_1 = require("../../repositories/user/get-user-by-username/mongo-get-user-username");
+const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //chamada do controller
+    const mongoGetUserByUsernameRepository = new mongo_get_user_username_1.MongoGetUserByUsernameRepository();
+    const signinController = new signin_1.SigninController(mongoGetUserByUsernameRepository);
+    const { body, statusCode } = yield signinController.handle({
+        body: req.body,
+    });
+    res.send(body).status(statusCode);
 });
-exports.ensureAuthencticated = ensureAuthencticated;
+exports.AuthController = {
+    signin: signin,
+};
