@@ -15,5 +15,5 @@ router.post("/user",   ensureAuthencticated, UserValidationSchema.createUserVali
 router.put("/user",    ensureAuthencticated, UserValidationSchema.updateUserValidation, UserController.update);
 router.delete("/user", ensureAuthencticated, UserValidationSchema.deleteUserValidation, UserController.delete);
 
-router.delete("/signin",  AuthValidationSchema.signinValidation, AuthController.signin);
-router.delete("/signup",  UserValidationSchema.createUserValidation, UserController.create);
+router.post("/signin",  AuthValidationSchema.signinValidation, AuthController.signin);
+router.post("/signup",  UserValidationSchema.createUserValidation, UserController.create);
