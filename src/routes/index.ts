@@ -2,14 +2,17 @@ import { Router } from "express";
 import { MongoGetUsersRepository } from "../repositories/get-users/mongo-get-users";
 import { MongoCreateUserRepository } from "../repositories/create-user/mongo-create-user";
 import { GetUsersController } from "../controllers/get-users";
-import { CreateUserController } from "../controllers/create-user/create-user";
+import { CreateUserController } from "../controllers/create-user";
 import * as yup from "yup";
 import { Validator } from "../shared/middlewares/Validation";
 import { CreateUserParams } from "../controllers/create-user/protocols";
 import { GetUsersParams } from "../controllers/get-users/protocols";
-import { GetUserIdParams } from "../controllers/get-user-id/protocols";
-import { MongoGetUserIdRepository } from "../repositories/get-user-id/mongo-get-user-id";
-import { GetUserIdController } from "../controllers/get-user-id";
+import { UpdateUserParams } from "../controllers/update-user/protocols";
+import { GetUserByIdParams } from "../controllers/get-user-by-id/protocols";
+import { GetUserByIdController } from "../controllers/get-user-by-id";
+import { MongoGetUserByIdRepository } from "../repositories/get-user-by-id/mongo-get-user-id";
+import { UpdateUserController } from "../controllers/update-user";
+import { MongoUpdateUserRepository } from "../repositories/update-user/mongo-update-user";
 
 
 
@@ -37,15 +40,15 @@ router.get("/users", Validator((getSchema) => ({
 
 router.get("/user", Validator((getSchema) => ({
     //Validações
-    query: getSchema<GetUserIdParams>(yup.object().shape({
+    query: getSchema<GetUserByIdParams>(yup.object().shape({
         id: yup.string().required(),
     })),
 })), async (req, res) => {
     //chamada do controller
-    const mongoGetUserIdRepository = new MongoGetUserIdRepository();
-    const getUserIdController = new GetUserIdController(mongoGetUserIdRepository);
+    const mongoGetUserByIdRepository = new MongoGetUserByIdRepository();
+    const getUserByIdController = new GetUserByIdController(mongoGetUserByIdRepository);
 
-    const { body, statusCode } = await getUserIdController.handle({
+    const { body, statusCode } = await getUserByIdController.handle({
         query:req.query,
     });
 
@@ -66,6 +69,23 @@ router.post("/user", Validator((getSchema) => ({
     const createUserController = new CreateUserController(mongoCreateUserRepository);
 
     const { body, statusCode } = await createUserController.handle({
+        body: req.body,
+    });
+
+    res.send(body).status(statusCode);
+});
+
+router.put("/user", Validator((getSchema) => ({
+    //Validações
+    query: getSchema<UpdateUserParams>(yup.object().shape({
+        id: yup.string().required(),
+    })),
+})), async (req, res) => {
+    //chamada do controller
+    const mongoUpdateUserRepository = new MongoUpdateUserRepository;
+    const updateUserController = new UpdateUserController(mongoUpdateUserRepository);
+
+    const { body, statusCode } = await updateUserController.handle({
         body: req.body,
     });
 

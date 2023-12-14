@@ -20,23 +20,21 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MongoCreateUserRepository = void 0;
+exports.MongoGetUserByIdRepository = void 0;
+const mongodb_1 = require("mongodb");
 const mongo_1 = require("../../database/mongo");
-class MongoCreateUserRepository {
-    createUser(params) {
+class MongoGetUserByIdRepository {
+    getUserById(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { insertedId } = yield mongo_1.MongoClient.db
-                .collection("users")
-                .insertOne(params);
             const user = yield mongo_1.MongoClient.db
                 .collection("users")
-                .findOne({ _id: insertedId });
+                .findOne({ _id: new mongodb_1.ObjectId(params.id) });
             if (!user) {
-                throw new Error("User not created");
+                throw new Error("User not found");
             }
             const { _id, password } = user, rest = __rest(user, ["_id", "password"]);
             return Object.assign({ id: _id.toHexString() }, rest);
         });
     }
 }
-exports.MongoCreateUserRepository = MongoCreateUserRepository;
+exports.MongoGetUserByIdRepository = MongoGetUserByIdRepository;

@@ -20,17 +20,18 @@ var __rest = (this && this.__rest) || function (s, e) {
     return t;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.MongoCreateUserRepository = void 0;
+exports.MongoUpdateUserRepository = void 0;
+const mongodb_1 = require("mongodb");
 const mongo_1 = require("../../database/mongo");
-class MongoCreateUserRepository {
-    createUser(params) {
+class MongoUpdateUserRepository {
+    updateUser(params) {
         return __awaiter(this, void 0, void 0, function* () {
-            const { insertedId } = yield mongo_1.MongoClient.db
+            yield mongo_1.MongoClient.db
                 .collection("users")
-                .insertOne(params);
+                .updateOne({ _id: new mongodb_1.ObjectId(params.id) }, { $set: Object.assign({}, params) });
             const user = yield mongo_1.MongoClient.db
                 .collection("users")
-                .findOne({ _id: insertedId });
+                .findOne({ _id: new mongodb_1.ObjectId(params.id) });
             if (!user) {
                 throw new Error("User not created");
             }
@@ -39,4 +40,4 @@ class MongoCreateUserRepository {
         });
     }
 }
-exports.MongoCreateUserRepository = MongoCreateUserRepository;
+exports.MongoUpdateUserRepository = MongoUpdateUserRepository;

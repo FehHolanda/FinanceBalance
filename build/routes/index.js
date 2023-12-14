@@ -37,11 +37,13 @@ const express_1 = require("express");
 const mongo_get_users_1 = require("../repositories/get-users/mongo-get-users");
 const mongo_create_user_1 = require("../repositories/create-user/mongo-create-user");
 const get_users_1 = require("../controllers/get-users");
-const create_user_1 = require("../controllers/create-user/create-user");
+const create_user_1 = require("../controllers/create-user");
 const yup = __importStar(require("yup"));
 const Validation_1 = require("../shared/middlewares/Validation");
-const mongo_get_user_id_1 = require("../repositories/get-user-id/mongo-get-user-id");
-const get_user_id_1 = require("../controllers/get-user-id");
+const get_user_by_id_1 = require("../controllers/get-user-by-id");
+const mongo_get_user_id_1 = require("../repositories/get-user-by-id/mongo-get-user-id");
+const update_user_1 = require("../controllers/update-user");
+const mongo_update_user_1 = require("../repositories/update-user/mongo-update-user");
 exports.router = (0, express_1.Router)();
 exports.router.get("/users", (0, Validation_1.Validator)((getSchema) => ({
     //Validações
@@ -66,9 +68,9 @@ exports.router.get("/user", (0, Validation_1.Validator)((getSchema) => ({
     })),
 })), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //chamada do controller
-    const mongoGetUserIdRepository = new mongo_get_user_id_1.MongoGetUserIdRepository();
-    const getUserIdController = new get_user_id_1.GetUserIdController(mongoGetUserIdRepository);
-    const { body, statusCode } = yield getUserIdController.handle({
+    const mongoGetUserByIdRepository = new mongo_get_user_id_1.MongoGetUserByIdRepository();
+    const getUserByIdController = new get_user_by_id_1.GetUserByIdController(mongoGetUserByIdRepository);
+    const { body, statusCode } = yield getUserByIdController.handle({
         query: req.query,
     });
     res.send(body).status(statusCode);
@@ -85,6 +87,20 @@ exports.router.post("/user", (0, Validation_1.Validator)((getSchema) => ({
     const mongoCreateUserRepository = new mongo_create_user_1.MongoCreateUserRepository;
     const createUserController = new create_user_1.CreateUserController(mongoCreateUserRepository);
     const { body, statusCode } = yield createUserController.handle({
+        body: req.body,
+    });
+    res.send(body).status(statusCode);
+}));
+exports.router.put("/user", (0, Validation_1.Validator)((getSchema) => ({
+    //Validações
+    query: getSchema(yup.object().shape({
+        id: yup.string().required(),
+    })),
+})), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //chamada do controller
+    const mongoUpdateUserRepository = new mongo_update_user_1.MongoUpdateUserRepository;
+    const updateUserController = new update_user_1.UpdateUserController(mongoUpdateUserRepository);
+    const { body, statusCode } = yield updateUserController.handle({
         body: req.body,
     });
     res.send(body).status(statusCode);

@@ -25,6 +25,5 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     server.use(express_1.default.json(), routes_1.router);
     yield mongo_1.MongoClient.connect();
     server.listen(port, () => console.log(`listening on port ${port}!`));
-    console.log("teste deploy");
 });
 main();
