@@ -93,8 +93,11 @@ exports.router.post("/user", (0, Validation_1.Validator)((getSchema) => ({
 }));
 exports.router.put("/user", (0, Validation_1.Validator)((getSchema) => ({
     //Validações
-    query: getSchema(yup.object().shape({
+    body: getSchema(yup.object().shape({
         id: yup.string().required(),
+        name: yup.string().required(),
+        username: yup.string().required(),
+        password: yup.string().required(),
     })),
 })), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //chamada do controller

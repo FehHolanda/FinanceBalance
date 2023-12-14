@@ -11,6 +11,9 @@ export interface IUpdateUserRepository{
 
 export interface UpdateUserParams {
     id: string;
+    name: string;
+    username: string;
+    password: string;
 }
 
 export type HttpRequestUpdateUser<B,Q=void,H=void,P=void> =  HttpRequest<B,H,P,Q>

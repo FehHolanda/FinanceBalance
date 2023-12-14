@@ -77,8 +77,11 @@ router.post("/user", Validator((getSchema) => ({
 
 router.put("/user", Validator((getSchema) => ({
     //Validações
-    query: getSchema<UpdateUserParams>(yup.object().shape({
+    body: getSchema<UpdateUserParams>(yup.object().shape({
         id: yup.string().required(),
+        name: yup.string().required(),
+        username: yup.string().required(),
+        password:yup.string().required(),
     })),
 })), async (req, res) => {
     //chamada do controller
