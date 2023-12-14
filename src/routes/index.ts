@@ -13,6 +13,9 @@ import { GetUserByIdController } from "../controllers/get-user-by-id";
 import { MongoGetUserByIdRepository } from "../repositories/get-user-by-id/mongo-get-user-id";
 import { UpdateUserController } from "../controllers/update-user";
 import { MongoUpdateUserRepository } from "../repositories/update-user/mongo-update-user";
+import { DeleteUserParams } from "../controllers/delete-user/protocols";
+import { DeleteUserController } from "../controllers/delete-user";
+import { MongoDeleteUserRepository } from "../repositories/delete-user/mongo-delete-user";
 
 
 
@@ -90,6 +93,23 @@ router.put("/user", Validator((getSchema) => ({
 
     const { body, statusCode } = await updateUserController.handle({
         body: req.body,
+    });
+
+    res.send(body).status(statusCode);
+});
+
+router.delete("/user", Validator((getSchema) => ({
+    //Validações
+    body: getSchema<DeleteUserParams>(yup.object().shape({
+        id: yup.string().required(),
+    })),
+})), async (req, res) => {
+    //chamada do controller
+    const mongoDeleteUserRepository = new MongoDeleteUserRepository;
+    const deleteUserController = new DeleteUserController(mongoDeleteUserRepository);
+
+    const { body, statusCode } = await deleteUserController.handle({
+        query: req.query,
     });
 
     res.send(body).status(statusCode);

@@ -44,6 +44,8 @@ const get_user_by_id_1 = require("../controllers/get-user-by-id");
 const mongo_get_user_id_1 = require("../repositories/get-user-by-id/mongo-get-user-id");
 const update_user_1 = require("../controllers/update-user");
 const mongo_update_user_1 = require("../repositories/update-user/mongo-update-user");
+const delete_user_1 = require("../controllers/delete-user");
+const mongo_delete_user_1 = require("../repositories/delete-user/mongo-delete-user");
 exports.router = (0, express_1.Router)();
 exports.router.get("/users", (0, Validation_1.Validator)((getSchema) => ({
     //Validações
@@ -105,6 +107,20 @@ exports.router.put("/user", (0, Validation_1.Validator)((getSchema) => ({
     const updateUserController = new update_user_1.UpdateUserController(mongoUpdateUserRepository);
     const { body, statusCode } = yield updateUserController.handle({
         body: req.body,
+    });
+    res.send(body).status(statusCode);
+}));
+exports.router.delete("/user", (0, Validation_1.Validator)((getSchema) => ({
+    //Validações
+    body: getSchema(yup.object().shape({
+        id: yup.string().required(),
+    })),
+})), (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //chamada do controller
+    const mongoDeleteUserRepository = new mongo_delete_user_1.MongoDeleteUserRepository;
+    const deleteUserController = new delete_user_1.DeleteUserController(mongoDeleteUserRepository);
+    const { body, statusCode } = yield deleteUserController.handle({
+        query: req.query,
     });
     res.send(body).status(statusCode);
 }));
