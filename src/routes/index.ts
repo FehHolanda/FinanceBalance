@@ -100,7 +100,7 @@ router.put("/user", Validator((getSchema) => ({
 
 router.delete("/user", Validator((getSchema) => ({
     //Validações
-    body: getSchema<DeleteUserParams>(yup.object().shape({
+    query: getSchema<DeleteUserParams>(yup.object().shape({
         id: yup.string().required(),
     })),
 })), async (req, res) => {

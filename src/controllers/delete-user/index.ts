@@ -8,7 +8,6 @@ export class DeleteUserController implements IDeleteUserController {
     constructor(private readonly deleteUserRepository: IDeleteUserRepository) { }
 
     async handle(httpRequest: HttpRequestDeleteUser<DeleteUserParams>): Promise<HttpResponse<Omit<User, "password">>> {
-        console.log(httpRequest.query);
 
         try {
             if (!httpRequest.query) return {

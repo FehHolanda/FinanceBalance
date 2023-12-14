@@ -112,7 +112,7 @@ exports.router.put("/user", (0, Validation_1.Validator)((getSchema) => ({
 }));
 exports.router.delete("/user", (0, Validation_1.Validator)((getSchema) => ({
     //Validações
-    body: getSchema(yup.object().shape({
+    query: getSchema(yup.object().shape({
         id: yup.string().required(),
     })),
 })), (req, res) => __awaiter(void 0, void 0, void 0, function* () {

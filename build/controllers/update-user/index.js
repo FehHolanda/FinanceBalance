@@ -17,7 +17,6 @@ class UpdateUserController {
     }
     handle(httpRequest) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(httpRequest.body);
             try {
                 if (!httpRequest.body)
                     return {

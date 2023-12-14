@@ -17,7 +17,6 @@ class DeleteUserController {
     }
     handle(httpRequest) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(httpRequest.query);
             try {
                 if (!httpRequest.query)
                     return {

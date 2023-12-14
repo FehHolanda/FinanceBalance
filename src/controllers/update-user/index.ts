@@ -8,7 +8,6 @@ export class UpdateUserController implements IUpdateUserController {
     constructor(private readonly updateUserRepository: IUpdateUserRepository) { }
 
     async handle(httpRequest: HttpRequestUpdateUser<UpdateUserParams>): Promise<HttpResponse<Omit<User, "password">>> {
-        console.log(httpRequest.body);
 
         try {
             if (!httpRequest.body) return {

@@ -9,6 +9,7 @@ export class GetUsersController implements IGetUsersController {
 
     async handle(httpRequest: HttpRequestGetUser<GetUsersParams>): Promise<HttpResponse<Omit<User,"password">[]>> {
         console.log(httpRequest.query);
+        
         try {
             const users = await this.getUsersRepository.getUsers();
 
