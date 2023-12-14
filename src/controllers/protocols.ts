@@ -10,6 +10,3 @@ export interface HttpRequest<B,H,P,Q>{
     query?:Q;
 }
 
-
-
-

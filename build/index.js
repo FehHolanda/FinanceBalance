@@ -14,6 +14,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const dotenv_1 = require("dotenv");
+const mongo_1 = require("./database/mongo");
 const routes_1 = require("./routes");
 const TranslationsYup_1 = require("./shared/services/TranslationsYup");
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
@@ -22,7 +23,7 @@ const main = () => __awaiter(void 0, void 0, void 0, function* () {
     const server = (0, express_1.default)();
     const port = process.env.PORT || 8000;
     server.use(express_1.default.json(), routes_1.router);
-    //await MongoClient.connect();    
+    yield mongo_1.MongoClient.connect();
     server.listen(port, () => console.log(`listening on port ${port}!`));
 });
 main();
