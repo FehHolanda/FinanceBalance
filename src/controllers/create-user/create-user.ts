@@ -7,7 +7,7 @@ export class CreateUserController implements ICreateUserController {
 
     constructor(private readonly createUserRepository:ICreateUserRepository){}
 
-    async handle(httpRequest:HttpRequestCreateUser<CreateUserParams>): Promise<HttpResponse<User>> {
+    async handle(httpRequest:HttpRequestCreateUser<CreateUserParams>): Promise<HttpResponse<Omit<User,"password">>> {
         try {  
             
             if(!httpRequest.body) return{
