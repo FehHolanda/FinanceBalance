@@ -1,5 +1,5 @@
 import { User } from "../../../models/user";
-import { HttpRequest, HttpResponse } from "../protocols";
+import { HttpRequest, HttpResponse } from "../../protocols";
 
 export interface IUpdateUserController {
     handle(httpRequest:HttpRequestUpdateUser<UpdateUserParams>): Promise<HttpResponse<Omit<User,"password">>>;

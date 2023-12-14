@@ -1,6 +1,6 @@
 import { RequestHandler } from "express";
 
-export const ensureauthencticated: RequestHandler =async (req,res,next) => {
+export const ensureAuthencticated: RequestHandler =async (req,res,next) => {
 
     
     return next();

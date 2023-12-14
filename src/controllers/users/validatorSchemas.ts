@@ -50,7 +50,7 @@ const deleteUserValidation = Validator((getSchema) => ({
 }));
 
 
-export const ValidationSchema = {
+export const UserValidationSchema = {
     getUsersValidation : getUsersValidation,
     getUserValidation: getUserValidation,
     createUserValidation:createUserValidation,

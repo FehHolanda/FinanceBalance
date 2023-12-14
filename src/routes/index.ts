@@ -1,14 +1,19 @@
 import { Router } from "express";
-import { ValidationSchema } from "../controllers/users/validatorSchemas";
+import { UserValidationSchema } from "../controllers/users/validatorSchemas";
 import { UserController } from "../controllers/users/userControler";
-
+import { ensureAuthencticated } from "../shared/middlewares/EnsureAuthenticated";
+import {AuthValidationSchema} from "../controllers/auth/validatorSchemas";
+import { AuthController } from "../controllers/auth/authControler";
 
 
 export const router = Router();
 
 
-router.get("/users", ValidationSchema.getUsersValidation,UserController.getAll);
-router.get("/user", ValidationSchema.getUserValidation, UserController.getUser);
-router.post("/user", ValidationSchema.createUserValidation,UserController.create);
-router.put("/user", ValidationSchema.updateUserValidation, UserController.update);
-router.delete("/user", ValidationSchema.deleteUserValidation, UserController.delete);
+router.get("/users",   ensureAuthencticated, UserValidationSchema.getUsersValidation,   UserController.getAll);
+router.get("/user",    ensureAuthencticated, UserValidationSchema.getUserValidation,    UserController.getUser);
+router.post("/user",   ensureAuthencticated, UserValidationSchema.createUserValidation, UserController.create);
+router.put("/user",    ensureAuthencticated, UserValidationSchema.updateUserValidation, UserController.update);
+router.delete("/user", ensureAuthencticated, UserValidationSchema.deleteUserValidation, UserController.delete);
+
+router.delete("/signin",  AuthValidationSchema.signinValidation, AuthController.signin);
+router.delete("/signup",  UserValidationSchema.createUserValidation, UserController.create);

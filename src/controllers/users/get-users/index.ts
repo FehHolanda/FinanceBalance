@@ -1,6 +1,6 @@
 import { StatusCodes } from "http-status-codes";
 import { GetUsersParams, HttpRequestGetUser, IGetUsersController, IGetUsersRepository } from "./protocols";
-import { HttpResponse } from "../protocols";
+import { HttpResponse } from "../../protocols";
 import { User } from "../../../models/user";
 
 export class GetUsersController implements IGetUsersController {

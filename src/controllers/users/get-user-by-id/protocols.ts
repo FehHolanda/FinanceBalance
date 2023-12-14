@@ -1,5 +1,5 @@
 import { User } from "../../../models/user";
-import { HttpRequest, HttpResponse } from "../protocols";
+import { HttpRequest, HttpResponse } from "../../protocols";
 
 export interface IGetUserByIdController {
     handle(httpRequest:HttpRequestGetUserById<GetUserByIdParams>): Promise<HttpResponse<Omit<User,"password">>>;

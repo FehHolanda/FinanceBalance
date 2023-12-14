@@ -1,5 +1,5 @@
 import { StatusCodes } from "http-status-codes";
-import { HttpResponse } from "../protocols";
+import { HttpResponse } from "../../protocols";
 import { User } from "../../../models/user";
 import { DeleteUserParams, HttpRequestDeleteUser, IDeleteUserController, IDeleteUserRepository } from "./protocols";
 

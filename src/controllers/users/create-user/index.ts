@@ -1,7 +1,7 @@
 import { StatusCodes } from "http-status-codes";
 import { User } from "../../../models/user";
 import { CreateUserParams, HttpRequestCreateUser, ICreateUserController, ICreateUserRepository } from "./protocols";
-import { HttpResponse } from "../protocols";
+import { HttpResponse } from "../../protocols";
 
 export class CreateUserController implements ICreateUserController {
 
