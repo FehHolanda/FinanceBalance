@@ -73,7 +73,7 @@ exports.router.get("/user", (0, Validation_1.Validator)((getSchema) => ({
     });
     res.send(body).status(statusCode);
 }));
-exports.router.post("/users", (0, Validation_1.Validator)((getSchema) => ({
+exports.router.post("/user", (0, Validation_1.Validator)((getSchema) => ({
     //Validações
     body: getSchema(yup.object().shape({
         name: yup.string().required(),

@@ -19,8 +19,6 @@ const main = async () => {
    
     server.listen(port,() => console.log(`listening on port ${port}!`));
 
-    console.log("teste deploy");
-
 };
 
 main();

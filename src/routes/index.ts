@@ -53,7 +53,7 @@ router.get("/user", Validator((getSchema) => ({
 });
 
 
-router.post("/users", Validator((getSchema) => ({
+router.post("/user", Validator((getSchema) => ({
     //Validações
     body: getSchema<CreateUserParams>(yup.object().shape({
         name: yup.string().required(),
