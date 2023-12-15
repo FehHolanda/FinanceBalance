@@ -19,7 +19,7 @@ const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body, statusCode } = yield signinController.handle({
         body: req.body,
     });
-    res.send(body).status(statusCode);
+    res.status(statusCode).json(body);
 });
 exports.AuthController = {
     signin: signin,

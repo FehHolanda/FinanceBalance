@@ -63,7 +63,7 @@ const erase = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { body, statusCode } = yield deleteUserController.handle({
         query: req.query,
     });
-    res.send(body).status(statusCode);
+    res.status(statusCode).send(body);
 });
 exports.UserController = {
     create: create,

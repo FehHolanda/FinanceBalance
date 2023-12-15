@@ -18,6 +18,12 @@ const ensureAuthencticated = (req, res, next) => __awaiter(void 0, void 0, void 
             erros: { default: "não autenticado" }
         });
     }
+    const [type, token] = authorization.split(" ");
+    if (type !== "Bearer" || token !== "token") {
+        return res.status(http_status_codes_1.StatusCodes.UNAUTHORIZED).json({
+            erros: { default: "não autenticado" }
+        });
+    }
     return next();
 });
 exports.ensureAuthencticated = ensureAuthencticated;
