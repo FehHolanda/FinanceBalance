@@ -17,4 +17,4 @@ router.delete("/user", ensureAuthencticated, UserValidationSchema.deleteUserVali
 
 router.post("/signin",  AuthValidationSchema.signinValidation, AuthController.signin);
 router.post("/signup",  UserValidationSchema.createUserValidation, UserController.create);
-router.post("/validation",  UserValidationSchema.createUserValidation, UserController.create);
+router.post("/validation",ensureAuthencticated, AuthValidationSchema.IsAuthenticatedValidation, AuthController.isAuthenticated);

@@ -10,7 +10,7 @@ export interface IGetUserByIdRepository{
 }
 
 export interface GetUserByIdParams {
-    id?: string;    
+    id? : string;    
 }
 
 export type HttpRequestGetUserById<Q,B=void,H=void,P=void> =  HttpRequest<B,H,P,Q>
