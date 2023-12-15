@@ -36,6 +36,7 @@ const ensureAuthencticated = (req, res, next) => __awaiter(void 0, void 0, void 
             erros: { default: "Não autenticado" }
         });
     }
+    req.headers.idUser = jwtData.uid;
     return next();
 });
 exports.ensureAuthencticated = ensureAuthencticated;
