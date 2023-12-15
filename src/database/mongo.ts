@@ -6,7 +6,7 @@ export const MongoClient = {
     
     async connect(): Promise<void>{
 
-        const client = new MongoCLI(process.env.MONGODB_STRINGCONNECTION || "mongodb://root:password@localhost:27017");
+        const client = await new MongoCLI(process.env.MONGODB_STRINGCONNECTION || "mongodb://root:password@localhost:27017");
         
         const db = client.db("users-db");
 
