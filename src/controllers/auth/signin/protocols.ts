@@ -2,7 +2,7 @@ import { User } from "../../../models/user";
 import { HttpRequest, HttpResponse } from "../../protocols";
 
 export interface  ISigninController {
-    handle(httpRequest:HttpRequestSignin<SigninParams>): Promise<HttpResponse<IAccessToken>>;
+    handle(httpRequest:HttpRequestSignin<SigninParams>): Promise<HttpResponse<ISigninResponse>>;
 }
 
 export interface IMongoGetUserByUsernameRepository{
@@ -14,7 +14,8 @@ export interface SigninParams {
     password: string;
 }
 
-export interface IAccessToken {
+export interface ISigninResponse {
+    user:Omit<User,"password">,
     accessToken:string,
 }
 

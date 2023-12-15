@@ -1,13 +1,13 @@
 import { StatusCodes } from "http-status-codes";
 import { HttpResponse } from "../../protocols";
-import { HttpRequestSignin, IAccessToken, IMongoGetUserByUsernameRepository, ISigninController, SigninParams } from "./protocols";
+import { HttpRequestSignin, IMongoGetUserByUsernameRepository, ISigninController, ISigninResponse, SigninParams } from "./protocols";
 import { JWTService } from "../../../shared/services/JWTservice";
 
 export class SigninController implements ISigninController {
 
     constructor(private readonly getUserByUsernameRepository: IMongoGetUserByUsernameRepository) { }
 
-    async handle(httpRequest: HttpRequestSignin<SigninParams>): Promise<HttpResponse<IAccessToken>> {
+    async handle(httpRequest: HttpRequestSignin<SigninParams>): Promise<HttpResponse<ISigninResponse>> {
 
         try {
             if (!httpRequest.body) return {
@@ -30,7 +30,7 @@ export class SigninController implements ISigninController {
                 
                 return {
                     statusCode: StatusCodes.OK,
-                    body: {accessToken:acessToken},
+                    body: {accessToken:acessToken,user:rest},
                 };
             }else{
                 return {
