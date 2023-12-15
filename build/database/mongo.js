@@ -16,7 +16,7 @@ exports.MongoClient = {
     db: undefined,
     connect() {
         return __awaiter(this, void 0, void 0, function* () {
-            const client = new mongodb_1.MongoClient(process.env.MONGODB_STRINGCONNECTION || "mongodb+srv://root:password@localhost:27017");
+            const client = yield new mongodb_1.MongoClient(process.env.MONGODB_STRINGCONNECTION || "mongodb://root:password@localhost:27017");
             const db = client.db("users-db");
             this.client = client;
             this.db = db;
