@@ -9,6 +9,20 @@ export const ensureAuthencticated: RequestHandler =async (req,res,next) => {
             erros:{default:"não autenticado"}        
         });
     }
+
+    const [type,token] = authorization.split(" ");
+
+    if(type !== "Bearer" || token !== "token"){
+        return res.status(StatusCodes.UNAUTHORIZED).json({
+            erros:{default:"não autenticado"}        
+        });
+    }
+
+    
+
+
+
+    
     
     return next();
 };

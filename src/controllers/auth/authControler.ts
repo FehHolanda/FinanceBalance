@@ -12,7 +12,7 @@ const signin :RequestHandler = async (req, res) => {
         body:req.body,
     });
 
-    res.send(body).status(statusCode);
+    res.status(statusCode).json(body);
 };
 
 

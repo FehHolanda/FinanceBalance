@@ -70,7 +70,7 @@ const erase: RequestHandler = async (req, res) => {
         query: req.query,
     });
 
-    res.send(body).status(statusCode);
+    res.status(statusCode).send(body);
 };
 
 
