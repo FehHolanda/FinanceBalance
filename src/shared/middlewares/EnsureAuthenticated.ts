@@ -30,6 +30,6 @@ export const ensureAuthencticated: RequestHandler = async (req, res, next) => {
         });
     }
 
-
+    req.headers.idUser = jwtData.uid;
     return next();
 };
