@@ -1,14 +1,13 @@
 import { StatusCodes } from "http-status-codes";
 import { HttpResponse } from "../../protocols";
-import { User } from "../../../models/user";
-import { HttpRequestSignin, IMongoGetUserByUsernameRepository, ISigninController, SigninParams } from "./protocols";
-
+import { HttpRequestSignin, IAccessToken, IMongoGetUserByUsernameRepository, ISigninController, SigninParams } from "./protocols";
+import { JWTService } from "../../../shared/services/JWTservice";
 
 export class SigninController implements ISigninController {
 
     constructor(private readonly getUserByUsernameRepository: IMongoGetUserByUsernameRepository) { }
 
-    async handle(httpRequest: HttpRequestSignin<SigninParams>): Promise<HttpResponse<Omit<User, "password">>> {
+    async handle(httpRequest: HttpRequestSignin<SigninParams>): Promise<HttpResponse<IAccessToken>> {
 
         try {
             if (!httpRequest.body) return {
@@ -16,12 +15,22 @@ export class SigninController implements ISigninController {
                 body: "need a body",
             };
 
-            const { password } = await this.getUserByUsernameRepository.getUserByUsername(httpRequest.body);
+            const { password,...rest } = await this.getUserByUsernameRepository.getUserByUsername(httpRequest.body);
 
             if (password === httpRequest.body.password) {
+                
+                const acessToken = JWTService.sign({uid:rest.id});
+
+                if(acessToken === "JET_SECRET_NOT_FOUND"){
+                    return{
+                        statusCode:StatusCodes.INTERNAL_SERVER_ERROR,
+                        body:"Erro ao gerar token de acesso"
+                    };
+                }
+                
                 return {
                     statusCode: StatusCodes.OK,
-                    body: "token",
+                    body: {accessToken:acessToken},
                 };
             }else{
                 return {

@@ -11,6 +11,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ensureAuthencticated = void 0;
 const http_status_codes_1 = require("http-status-codes");
+const JWTservice_1 = require("../services/JWTservice");
 const ensureAuthencticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const { authorization } = req.headers;
     if (!authorization) {
@@ -19,9 +20,20 @@ const ensureAuthencticated = (req, res, next) => __awaiter(void 0, void 0, void 
         });
     }
     const [type, token] = authorization.split(" ");
-    if (type !== "Bearer" || token !== "token") {
+    if (type !== "Bearer") {
         return res.status(http_status_codes_1.StatusCodes.UNAUTHORIZED).json({
             erros: { default: "não autenticado" }
+        });
+    }
+    const jwtData = JWTservice_1.JWTService.verify(token);
+    if (jwtData === "JET_SECRET_NOT_FOUND") {
+        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({
+            erros: { default: "Erro ao verificar o token" }
+        });
+    }
+    else if (jwtData === "INVALID_TOKEN") {
+        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({
+            erros: { default: "Não autenticado" }
         });
     }
     return next();

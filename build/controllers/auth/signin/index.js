@@ -8,9 +8,21 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __rest = (this && this.__rest) || function (s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.SigninController = void 0;
 const http_status_codes_1 = require("http-status-codes");
+const JWTservice_1 = require("../../../shared/services/JWTservice");
 class SigninController {
     constructor(getUserByUsernameRepository) {
         this.getUserByUsernameRepository = getUserByUsernameRepository;
@@ -23,11 +35,18 @@ class SigninController {
                         statusCode: http_status_codes_1.StatusCodes.BAD_REQUEST,
                         body: "need a body",
                     };
-                const { password } = yield this.getUserByUsernameRepository.getUserByUsername(httpRequest.body);
+                const _a = yield this.getUserByUsernameRepository.getUserByUsername(httpRequest.body), { password } = _a, rest = __rest(_a, ["password"]);
                 if (password === httpRequest.body.password) {
+                    const acessToken = JWTservice_1.JWTService.sign({ uid: rest.id });
+                    if (acessToken === "JET_SECRET_NOT_FOUND") {
+                        return {
+                            statusCode: http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR,
+                            body: "Erro ao gerar token de acesso"
+                        };
+                    }
                     return {
                         statusCode: http_status_codes_1.StatusCodes.OK,
-                        body: "token",
+                        body: { accessToken: acessToken },
                     };
                 }
                 else {
