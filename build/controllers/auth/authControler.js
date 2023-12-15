@@ -12,6 +12,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const signin_1 = require("./signin");
 const mongo_get_user_username_1 = require("../../repositories/user/get-user-by-username/mongo-get-user-username");
+const validation_1 = require("./validation");
+const mongo_get_user_id_1 = require("../../repositories/user/get-user-by-id/mongo-get-user-id");
 const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     //chamada do controller
     const mongoGetUserByUsernameRepository = new mongo_get_user_username_1.MongoGetUserByUsernameRepository();
@@ -21,6 +23,16 @@ const signin = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     });
     res.status(statusCode).json(body);
 });
+const isAuthenticated = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    //chamada do controller
+    const mongoGetUserByIdRepository = new mongo_get_user_id_1.MongoGetUserByIdRepository();
+    const isAuthenticatedController = new validation_1.IsAuthenticatedController(mongoGetUserByIdRepository);
+    const { body, statusCode } = yield isAuthenticatedController.handle({
+        body: req.body,
+    });
+    res.status(statusCode).json(body);
+});
 exports.AuthController = {
     signin: signin,
+    isAuthenticated: isAuthenticated
 };

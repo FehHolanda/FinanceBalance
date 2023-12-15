@@ -33,6 +33,13 @@ const signinValidation = (0, Validation_1.Validator)((getSchema) => ({
         password: yup.string().required(),
     })),
 }));
+const IsAuthenticatedValidation = (0, Validation_1.Validator)((getSchema) => ({
+    //Validações
+    headers: getSchema(yup.object().shape({
+        id: yup.string().required(),
+    })),
+}));
 exports.AuthValidationSchema = {
     signinValidation: signinValidation,
+    IsAuthenticatedValidation: IsAuthenticatedValidation,
 };

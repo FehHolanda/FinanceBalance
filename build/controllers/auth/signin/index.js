@@ -46,7 +46,7 @@ class SigninController {
                     }
                     return {
                         statusCode: http_status_codes_1.StatusCodes.OK,
-                        body: { accessToken: acessToken },
+                        body: { accessToken: acessToken, user: rest },
                     };
                 }
                 else {

@@ -17,11 +17,16 @@ const dotenv_1 = require("dotenv");
 const mongo_1 = require("./database/mongo");
 const routes_1 = require("./routes");
 const TranslationsYup_1 = require("./shared/services/TranslationsYup");
+const cors_1 = __importDefault(require("cors"));
 const main = () => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     (0, dotenv_1.config)();
     (0, TranslationsYup_1.SetLocale)();
     const server = (0, express_1.default)();
     const port = process.env.PORT || 8000;
+    server.use((0, cors_1.default)({
+        origin: ((_a = process.env.ENABLE_CORS) === null || _a === void 0 ? void 0 : _a.split(";")) || [],
+    }));
     server.use(express_1.default.json(), routes_1.router);
     yield mongo_1.MongoClient.connect();
     server.listen(port, () => console.log(`listening on port ${port}!`));
