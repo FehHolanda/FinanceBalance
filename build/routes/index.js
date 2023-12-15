@@ -13,5 +13,5 @@ exports.router.get("/user", EnsureAuthenticated_1.ensureAuthencticated, validato
 exports.router.post("/user", EnsureAuthenticated_1.ensureAuthencticated, validatorSchemas_1.UserValidationSchema.createUserValidation, userControler_1.UserController.create);
 exports.router.put("/user", EnsureAuthenticated_1.ensureAuthencticated, validatorSchemas_1.UserValidationSchema.updateUserValidation, userControler_1.UserController.update);
 exports.router.delete("/user", EnsureAuthenticated_1.ensureAuthencticated, validatorSchemas_1.UserValidationSchema.deleteUserValidation, userControler_1.UserController.delete);
-exports.router.delete("/signin", validatorSchemas_2.AuthValidationSchema.signinValidation, authControler_1.AuthController.signin);
-exports.router.delete("/signup", validatorSchemas_1.UserValidationSchema.createUserValidation, userControler_1.UserController.create);
+exports.router.post("/signin", validatorSchemas_2.AuthValidationSchema.signinValidation, authControler_1.AuthController.signin);
+exports.router.post("/signup", validatorSchemas_1.UserValidationSchema.createUserValidation, userControler_1.UserController.create);

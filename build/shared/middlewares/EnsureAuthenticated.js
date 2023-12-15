@@ -10,7 +10,14 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.ensureAuthencticated = void 0;
+const http_status_codes_1 = require("http-status-codes");
 const ensureAuthencticated = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { authorization } = req.headers;
+    if (!authorization) {
+        return res.status(http_status_codes_1.StatusCodes.UNAUTHORIZED).json({
+            erros: { default: "não autenticado" }
+        });
+    }
     return next();
 });
 exports.ensureAuthencticated = ensureAuthencticated;
